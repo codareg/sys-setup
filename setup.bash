@@ -70,6 +70,8 @@ if [[ ! -f $HOME/.ssh/github ]]; then
   gh auth setup-git
 fi
 
+
+: <<'END_COMMENT'
 #---------------------- DOT FILES ----------------------
 echo ".cfg" >.gitignore
 if [[ -d $HOME/.cfg ]]; then
@@ -86,7 +88,7 @@ git --git-dir=$HOME/.cfg/ --work-tree=$HOME checkout 2>&1 | egrep "\s+\." | awk 
 # checkout the dotfiles
 git --git-dir=$HOME/.cfg/ --work-tree=$HOME checkout
 git --git-dir=$HOME/.cfg/ --work-tree=$HOME config --local status.showUntrackedFiles no
-
+END_COMMENT
 #--------- NEOVIM Python Env -------
 cd $HOME/.config/nvim && python3 -m venv venv
 #------ nerd-fonts -------
@@ -95,13 +97,14 @@ wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/0xProto.zi
   fc-cache -fv
 
 #---------------------- OBSIDIAN----------------------
+: <<'END_COMMENT'
 # setup obsidian
 if [[ ! -d $HOME/obsidian ]]; then
   sudo snap install --classic obsidian
   git clone git@github.com:linem-davton/obsidianvault.git $HOME/obsidian
   sudo apt-get install "fonts-cmu"
 fi
-
+END_COMMENT
 #---------------------- FZF ----------------------
 if [[ ! -d $HOME/.fzf ]]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
